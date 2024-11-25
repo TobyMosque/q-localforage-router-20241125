@@ -13,10 +13,7 @@ export function useLocalForageStorage<T>(key: string, state: T, pinia?: Pinia) {
 
   const getData = markRaw(
     new Promise<RemovableRef<T>>((resolve) => {
-      const unwatch = watch(data, () => {
-        resolve(data);
-        unwatch();
-      });
+      watch(data, () => resolve(data), { once: true });
     }),
   );
 
